@@ -67,3 +67,22 @@ if (!function_exists('status_badge')) {
         return "<span class='badge bg-{$warna}'>" . ucfirst($status) . "</span>"; 
     } 
 } 
+
+if (!function_exists('ipk_badge')) { 
+    /** 
+     * Menghasilkan badge IPK dengan warna sesuai rentang nilai 
+     * @param float|int $ipk 
+     * @return string HTML badge 
+     */ 
+    function ipk_badge($ipk): string { 
+        $nilai = (float) $ipk; 
+        if ($nilai >= 3.5) { 
+            $warna = 'success'; 
+        } elseif ($nilai >= 3.0) { 
+            $warna = 'warning'; 
+        } else { 
+            $warna = 'danger'; 
+        } 
+        return "<span class='badge bg-{$warna}'>" . esc(number_format($nilai, 2)) . "</span>"; 
+    } 
+} 

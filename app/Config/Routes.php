@@ -12,6 +12,9 @@ $routes->get('/', 'Beranda::index');
 // Route halaman tentang  
 $routes->get('tentang', 'Beranda::tentang');
 
+// Route halaman profil
+$routes->get('profil', 'Profil::index');
+
 // Route controller Demo 
 $routes->get('demo', 'Demo::index'); 
 
