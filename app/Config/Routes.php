@@ -12,6 +12,9 @@ $routes->get('/', 'Beranda::index');
 // Route halaman tentang  
 $routes->get('tentang', 'Beranda::tentang');
 
+// Route halaman buku
+$routes->get('buku', 'Buku::index');
+
 // Route halaman profil
 $routes->get('profil', 'Profil::index');
 

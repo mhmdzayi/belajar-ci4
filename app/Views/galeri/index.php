@@ -43,3 +43,20 @@
 </div>
 
 <?= $this->endSection() ?>
+
+<!-- Page-specific scripts for Galeri -->
+<?= $this->section('scripts') ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Galeri page loaded successfully');
+        
+        // Example: Add click handler to gallery cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                console.log('Card clicked:', this.querySelector('.card-title').textContent);
+            });
+        });
+    });
+</script>
+<?= $this->endSection() ?>

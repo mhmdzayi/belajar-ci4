@@ -3,7 +3,7 @@
 <head> 
     <meta charset='UTF-8'> 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'> 
-    <title><?= isset($title) ? esc($title) . ' - MyApp' : 'MyApp' ?></title> 
+    <title><?= isset($title) ? esc($title) . ' - PerpustakaanKu' : 'PerpustakaanKu' ?></title> 
   
     <!-- Bootstrap 5 CSS --> 
     <link 
@@ -30,23 +30,23 @@ icons.css'
         </button> 
         <div class='collapse navbar-collapse' id='navMenu'> 
             <ul class='navbar-nav me-auto'> 
-                <li class='nav-item'> 
-                    <a class='nav-link <?= (current_url() == base_url('/')) ? 'active' : '' ?>' 
-                       href='<?= base_url('/') ?>'> 
-                        <i class='bi bi-house'></i> Beranda 
-                    </a> 
-                </li> 
-                <li class='nav-item'> 
-                    <a class='nav-link <?= str_contains(current_url(), '/buku') ? 'active' : '' ?>' 
-                       href='<?= base_url('buku') ?>'> 
-                        <i class='bi bi-journals'></i> Buku 
-                    </a> 
-                </li> 
-                <li class='nav-item'> 
-                    <a class='nav-link' href='<?= base_url('tentang') ?>'> 
-                        <i class='bi bi-info-circle'></i> Tentang 
-                    </a> 
-                </li> 
+                <li class='nav-item'>
+                    <a class='nav-link <?= (current_url() === base_url('/')) ? 'active' : '' ?>'
+                       href='<?= base_url('/') ?>'>
+                        <i class='bi bi-house'></i> Beranda
+                    </a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link <?= (current_url() === base_url('buku')) ? 'active' : '' ?>'
+                       href='<?= base_url('buku') ?>'>
+                        <i class='bi bi-journals'></i> Buku
+                    </a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link <?= (current_url() === base_url('tentang')) ? 'active' : '' ?>' href='<?= base_url('tentang') ?>'>
+                        <i class='bi bi-info-circle'></i> Tentang
+                    </a>
+                </li>
             </ul> 
  <div class='navbar-nav'> 
                 <?php if (session()->get('logged_in')): ?> 
@@ -142,9 +142,12 @@ icons.css'
 </footer> 
 <!-- END FOOTER --> 
   
-<!-- Bootstrap 5 JS --> 
-<script 
-src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'>
-</script> 
-</body> 
-</html> 
+<!-- Bootstrap 5 JS -->
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'>
+</script>
+
+<!-- Page-specific Scripts Section -->
+<?= $this->renderSection('scripts') ?>
+
+</body>
+</html>
