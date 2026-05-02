@@ -4,8 +4,12 @@
 <div class='row justify-content-center'>
     <div class='col-lg-8'>
         <div class='card shadow-sm'>
-            <div class='card-header bg-primary text-white'>
-                <h3 class='mb-0'><i class='bi bi-person-circle'></i> Profil Mahasiswa</h3>
+            <div class='card-header bg-primary text-white d-flex align-items-center'>
+                <img src='<?= avatar_url($nama) ?>' alt='<?= esc($nama) ?>' class='rounded-circle me-3' width='50' height='50'>
+                <div>
+                    <h3 class='mb-0'><i class='bi bi-person-circle'></i> Profil Mahasiswa</h3>
+                    <small>Inisial: <span class='badge bg-light text-primary'><?= inisial_nama($nama) ?></span></small>
+                </div>
             </div>
             <div class='card-body'>
                 <div class='row mb-4'>

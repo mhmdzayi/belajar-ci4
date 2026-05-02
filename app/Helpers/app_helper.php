@@ -85,4 +85,37 @@ if (!function_exists('ipk_badge')) {
         } 
         return "<span class='badge bg-{$warna}'>" . esc(number_format($nilai, 2)) . "</span>"; 
     } 
+}
+
+if (!function_exists('inisial_nama')) {
+    /**
+     * Mengambil inisial dari nama lengkap
+     * @param string $namaLengkap Nama lengkap (contoh: 'Budi Santoso')
+     * @return string Inisial uppercase (contoh: 'BS')
+     */
+    function inisial_nama(string $namaLengkap): string {
+        // Hapus spasi ekstra dan split nama
+        $nama = trim($namaLengkap);
+        $kata_kata = array_filter(explode(' ', $nama));
+        
+        // Ambil huruf pertama setiap kata
+        $inisial = '';
+        foreach ($kata_kata as $kata) {
+            $inisial .= strtoupper(substr($kata, 0, 1));
+        }
+        
+        return $inisial;
+    }
+}
+
+if (!function_exists('avatar_url')) {
+    /**
+     * Menghasilkan URL avatar dari ui-avatars.com
+     * @param string $nama Nama untuk avatar
+     * @return string URL avatar
+     */
+    function avatar_url(string $nama): string {
+        $namaEncoded = urlencode(trim($nama));
+        return "https://ui-avatars.com/api/?name={$namaEncoded}&background=random&color=fff&size=150";
+    }
 } 
