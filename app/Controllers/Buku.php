@@ -185,6 +185,40 @@ dihapus.");
             ->setBody($csv);
     }
 
+    // ──────────────────────────────────────
+    // STATISTIK - Tampilkan statistik buku
+    // ──────────────────────────────────────
+    public function statistik(): string
+    {
+        $stats = $this->bukuModel->getStatistik();
+
+        $db = \Config\Database::connect();
+
+        // Top 5 buku berdasarkan stok terbanyak
+        $top5 = $db->table('buku')
+            ->select('buku.judul, buku.stok, kategori.nama AS nama_kategori')
+            ->join('kategori', 'kategori.id = buku.kategori_id', 'left')
+            ->orderBy('buku.stok', 'DESC')
+            ->limit(5)
+            ->get()
+            ->getResultArray();
+
+        // Buku dengan stok 0
+        $zeroStock = $this->bukuModel
+            ->select('buku.id, buku.judul, buku.stok, kategori.nama AS nama_kategori')
+            ->join('kategori', 'kategori.id = buku.kategori_id', 'left')
+            ->where('buku.stok', 0)
+            ->orderBy('buku.judul', 'ASC')
+            ->findAll();
+
+        return view('buku/statistik', [
+            'title'     => 'Statistik Buku',
+            'stats'     => $stats,
+            'top5'      => $top5,
+            'zeroStock' => $zeroStock,
+        ]);
+    }
+
     private function ambilDataForm(): array 
     { 
         return [ 

@@ -82,13 +82,12 @@ class BukuModel extends Model
     { 
         $db = \Config\Database::connect(); 
         return [ 
-            'total'          => $this->countAll(), 
-            'total_stok'     => (int) 
-$db->table('buku')->selectSum('stok')->get()->getRow()->stok, 
-            'per_kategori'   => $db->table('buku') 
-                ->select('kategori.nama, COUNT(buku.id) AS jumlah') 
+            'total'        => $this->countAll(), 
+            'total_stok'   => (int) $db->table('buku')->selectSum('stok')->get()->getRow()->stok, 
+            'per_kategori' => $db->table('buku') 
+                ->select('kategori.nama, COUNT(buku.id) AS jumlah, SUM(buku.stok) AS jumlah_stok') 
                 ->join('kategori', 'kategori.id = buku.kategori_id', 'left') 
-                ->groupBy('buku.kategori_id') 
+                ->groupBy('buku.kategori_id, kategori.nama') 
                 ->orderBy('jumlah', 'DESC') 
                 ->get()->getResultArray(), 
         ]; 

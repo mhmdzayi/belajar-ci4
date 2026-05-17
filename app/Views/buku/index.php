@@ -6,6 +6,9 @@
         <p class='text-muted mb-0'>Total: <?= $total ?> buku ditemukan</p> 
     </div> 
     <div class='d-flex gap-2'>
+        <a href='<?= base_url('buku/statistik') ?>' class='btn btn-info'>
+            <i class='bi bi-graph-up'></i> Statistik
+        </a>
         <a href='<?= base_url('buku/ekspor'.($keyword ? '?q='.urlencode($keyword) : '')) ?>' class='btn btn-success'>
             <i class='bi bi-file-earmark-csv'></i> Ekspor CSV
         </a>
