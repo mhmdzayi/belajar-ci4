@@ -93,4 +93,12 @@ $db->table('buku')->selectSum('stok')->get()->getRow()->stok,
                 ->get()->getResultArray(), 
         ]; 
     } 
+
+    /**
+     * Hitung jumlah buku yang menggunakan sebuah kategori
+     */
+    public function countByKategori(int $kategoriId): int
+    {
+        return $this->where('kategori_id', $kategoriId)->countAllResults();
+    }
 } 

@@ -27,4 +27,32 @@ class KategoriModel extends Model
         } 
         return $result; 
     } 
+
+    /**
+     * Ambil semua kategori beserta jumlah buku pada masing-masing kategori
+     * Return: array of ['id','nama','deskripsi','jumlah']
+     */
+    public function getAllWithCounts(): array
+    {
+        $db = \Config\Database::connect();
+        return $db->table('kategori')
+            ->select('kategori.id, kategori.nama, kategori.deskripsi, COUNT(buku.id) AS jumlah')
+            ->join('buku', 'buku.kategori_id = kategori.id', 'left')
+            ->groupBy('kategori.id')
+            ->orderBy('kategori.nama', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
+    /**
+     * Cek apakah nama kategori sudah ada (opsional mengecualikan id tertentu)
+     */
+    public function isNameTaken(string $nama, int $excludeId = 0): bool
+    {
+        $qb = $this->where('nama', $nama);
+        if ($excludeId > 0) {
+            $qb->where('id !=', $excludeId);
+        }
+        return $qb->countAllResults() > 0;
+    }
 } 

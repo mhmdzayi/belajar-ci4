@@ -43,6 +43,12 @@ icons.css'
                     </a>
                 </li>
                 <li class='nav-item'>
+                    <a class='nav-link <?= (current_url() === base_url('kategori')) ? 'active' : '' ?>'
+                       href='<?= base_url('kategori') ?>'>
+                        <i class='bi bi-tags'></i> Kategori
+                    </a>
+                </li>
+                <li class='nav-item'>
                     <a class='nav-link <?= (current_url() === base_url('tentang')) ? 'active' : '' ?>' href='<?= base_url('tentang') ?>'>
                         <i class='bi bi-info-circle'></i> Tentang
                     </a>
