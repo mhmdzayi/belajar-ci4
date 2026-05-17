@@ -5,9 +5,14 @@
     <div><h2><i class='bi bi-journals'></i> Daftar Buku</h2> 
         <p class='text-muted mb-0'>Total: <?= $total ?> buku ditemukan</p> 
     </div> 
-    <a href='<?= base_url('buku/tambah') ?>' class='btn btn-primary'> 
-        <i class='bi bi-plus-circle'></i> Tambah Buku 
-    </a> 
+    <div class='d-flex gap-2'>
+        <a href='<?= base_url('buku/ekspor'.($keyword ? '?q='.urlencode($keyword) : '')) ?>' class='btn btn-success'>
+            <i class='bi bi-file-earmark-csv'></i> Ekspor CSV
+        </a>
+        <a href='<?= base_url('buku/tambah') ?>' class='btn btn-primary'> 
+            <i class='bi bi-plus-circle'></i> Tambah Buku 
+        </a>
+    </div>
 </div> 
   
 <!-- Form Pencarian --> 
