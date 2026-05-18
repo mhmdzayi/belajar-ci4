@@ -28,11 +28,13 @@
     </div> 
     <div class='col-md-3'> 
         <div class='card text-white bg-info text-center'> 
-            <div class='card-body'> 
-                <i class='bi bi-people fs-2'></i> 
-                <h3 class='my-1'><?= $total_user ?></h3> 
-                <div>Total Pengguna</div> 
-            </div> 
+            <a href='<?= base_url('admin/pengguna') ?>' class='text-white text-decoration-none'>
+                <div class='card-body'> 
+                    <i class='bi bi-people fs-2'></i> 
+                    <h3 class='my-1'><?= $total_user ?></h3> 
+                    <div>Total Pengguna</div> 
+                </div> 
+            </a>
         </div> 
     </div> 
     <div class='col-md-3'> 
@@ -69,7 +71,10 @@
     </div> 
     <div class='col-md-6'> 
         <div class='card mb-4'> 
-            <div class='card-header'><strong>Pengguna Terbaru</strong></div> 
+            <div class='card-header d-flex justify-content-between align-items-center'>
+                <strong>Pengguna Terbaru</strong>
+                <a href="<?= base_url('admin/pengguna') ?>" class="btn btn-sm btn-outline-secondary">Kelola</a>
+            </div> 
             <div class='card-body p-0'> 
                 <table class='table table-hover mb-0'> 
                     <thead class='table-light'><tr><th>Nama</th><th>Role</th><th>Bergabung</th></tr></thead> 

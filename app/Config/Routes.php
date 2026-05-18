@@ -85,5 +85,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->group('admin', ['filter' => 'role:admin'], function ($routes) { 
         $routes->get('/',  'Admin\Dashboard::index'); 
         $routes->get('pengguna',   'Admin\Pengguna::index'); 
+        $routes->post('pengguna/toggle-status/(:num)', 'Admin\Pengguna::toggleStatus/$1');
+        $routes->post('pengguna/ubah-role/(:num)', 'Admin\Pengguna::ubahRole/$1');
     }); 
 }); 
