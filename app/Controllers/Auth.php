@@ -24,6 +24,10 @@ class Auth extends BaseController
     /** Proses autentikasi dari form login. */ 
     public function prosesLogin() 
     { 
+        if (session()->getTempdata('login_locked')) {
+            return redirect()->to('/login')->with('error', 'Akun dikunci selama 10 menit akibat terlalu banyak percobaan login');
+        }
+
         $rules = [ 
             'identifier' => 'required|min_length[3]', 
             'password'   => 'required|min_length[6]', 
@@ -46,10 +50,26 @@ class Auth extends BaseController
             // Jika user tidak ada, tetap jalankan password_verify 
             // untuk mencegah timing attack yang mengukur waktu respons 
             if (!$user) password_verify($password, '$2y$12$dummy_hash_untuk_timing'); 
+
+            $attempts = session()->getTempdata('login_attempts') ?? 0;
+            $attempts++;
+            session()->setTempdata('login_attempts', $attempts, 600); // Hitungan kedaluwarsa dalam 10 menit
+
+            if ($attempts >= 5) {
+                session()->setTempdata('login_locked', true, 600); // 10 menit = 600 detik
+                session()->remove('login_attempts');
+                $pesanError = 'Akun dikunci selama 10 menit akibat terlalu banyak percobaan login';
+            } else {
+                $pesanError = 'Username/email atau password salah. Silakan coba lagi.'; 
+            }
+            
             session()->setFlashdata('error', $pesanError); 
             return redirect()->to('/login'); 
         } 
   
+        // Login berhasil — hapus data percobaan login gagal jika ada
+        session()->remove('login_attempts');
+
         // Login berhasil — simpan data ke session 
         session()->set([ 
             'user_id'   => $user['id'], 
