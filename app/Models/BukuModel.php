@@ -75,23 +75,31 @@ class BukuModel extends Model
         return $qb->countAllResults() > 0; 
     } 
   
-    /** 
-     * Ambil statistik buku 
+    /** * Ambil statistik buku 
      */ 
     public function getStatistik(): array 
     { 
         $db = \Config\Database::connect(); 
+        
+        // Simpan total dan stok ke dalam variabel dulu agar bisa dihitung
+        $total_buku = $this->countAll();
+        $total_stok = (int) $db->table('buku')->selectSum('stok')->get()->getRow()->stok;
+        
+        // Hitung rata-rata (hindari pembagian dengan 0 jika buku masih kosong)
+        $rata_stok = ($total_buku > 0) ? ($total_stok / $total_buku) : 0;
+
         return [ 
-            'total'        => $this->countAll(), 
-            'total_stok'   => (int) $db->table('buku')->selectSum('stok')->get()->getRow()->stok, 
+            'total'        => $total_buku, 
+            'total_stok'   => $total_stok, 
+            'rata_stok'    => round($rata_stok, 1), // Menambahkan rata_stok yang dicari View, dibulatkan 1 desimal
             'per_kategori' => $db->table('buku') 
-                ->select('kategori.nama, COUNT(buku.id) AS jumlah, SUM(buku.stok) AS jumlah_stok') 
+                ->select('kategori.nama, COUNT(buku.id) AS jumlah, SUM(buku.stok) AS total_stok') 
                 ->join('kategori', 'kategori.id = buku.kategori_id', 'left') 
                 ->groupBy('buku.kategori_id, kategori.nama') 
                 ->orderBy('jumlah', 'DESC') 
                 ->get()->getResultArray(), 
         ]; 
-    } 
+    }
 
     /**
      * Hitung jumlah buku yang menggunakan sebuah kategori

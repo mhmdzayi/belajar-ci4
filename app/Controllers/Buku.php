@@ -243,7 +243,7 @@ class Buku extends BaseController
 
         // Top 5 buku berdasarkan stok terbanyak
         $top5 = $db->table('buku')
-            ->select('buku.judul, buku.stok, kategori.nama AS nama_kategori')
+            ->select('buku.judul, buku.kode_buku, buku.stok, kategori.nama AS nama_kategori')
             ->join('kategori', 'kategori.id = buku.kategori_id', 'left')
             ->orderBy('buku.stok', 'DESC')
             ->limit(5)
@@ -252,17 +252,22 @@ class Buku extends BaseController
 
         // Buku dengan stok 0
         $zeroStock = $this->bukuModel
-            ->select('buku.id, buku.judul, buku.stok, kategori.nama AS nama_kategori')
+            ->select('buku.id, buku.judul, buku.kode_buku, buku.stok, kategori.nama AS nama_kategori')
             ->join('kategori', 'kategori.id = buku.kategori_id', 'left')
             ->where('buku.stok', 0)
             ->orderBy('buku.judul', 'ASC')
             ->findAll();
 
+        $statistik = [
+            'per_kategori' => $stats['per_kategori'],
+            'top_stok'     => $top5,
+            'stok_kosong'  => $zeroStock,
+        ];
+
         return view('buku/statistik', [
             'title'     => 'Statistik Buku',
             'stats'     => $stats,
-            'top5'      => $top5,
-            'zeroStock' => $zeroStock,
+            'statistik' => $statistik,
         ]);
     }
 
